@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package calculator.v1;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "calculator/backend/pkg/protobuf/calculator/v1"; // 修正路径
+
+
+message CalculationHistoryItem {
+  double operand1 = 1;
+  double operand2 = 2;
+  string operator = 3;
+  double result = 4;
+}
+
+message CalculationHistoryResponse {
+  repeated CalculationHistoryItem items = 1;
+}
+
+message CalculationRequest {
+  double operand1 = 1;
+  double operand2 = 2;
+  string operator = 3;
+}
+
+message CalculationResponse {
+  double result = 1;
+}
+
+service CalculatorService {
+  rpc Calculate(CalculationRequest) returns (CalculationResponse);
+  rpc GetHistory(google.protobuf.Empty) returns (CalculationHistoryResponse);
+}
